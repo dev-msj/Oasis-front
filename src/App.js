@@ -1,24 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import GoodWord from './home/GoodWord';
+import Login from './login/Login';
+import MyWord from './user/MyWord';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Suspense fallback={(<div>Loading...</div>)}>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "98vh", background: "#000000", overflow: "scroll" }}>
+        <Routes>
+          <Route path='/' element={<Login />} />
+          <Route path='/good-word' element={<GoodWord />} />
+          <Route path='/my-word' element={<MyWord />} />
+        </Routes>
+      </div>
+    </Suspense>
   );
 }
 
