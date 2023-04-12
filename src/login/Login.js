@@ -49,7 +49,7 @@ const Login = () => {
             if (res.data === true) {
                 if (Data === 'login') {
                     window.sessionStorage.setItem('uid', id);
-                    navigate('/good-word');
+                    navigate('/home');
                 } else {
                     setData('login');
                 }

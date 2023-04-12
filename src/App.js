@@ -1,8 +1,7 @@
 import React, { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import GoodWord from './home/GoodWord';
+import Home from './home/Home';
 import Login from './login/Login';
-import MyWord from './user/MyWord';
 
 const App = () => {
   return (
@@ -10,8 +9,7 @@ const App = () => {
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "98vh", background: "#000000", overflow: "scroll" }}>
         <Routes>
           <Route path='/' element={<Login />} />
-          <Route path='/good-word' element={<GoodWord />} />
-          <Route path='/my-word' element={<MyWord />} />
+          <Route path='/home' element={<Home />} />
         </Routes>
       </div>
     </Suspense>
