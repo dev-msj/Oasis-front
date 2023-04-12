@@ -9,7 +9,7 @@ const Home = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-        axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/home/suggestion`,
+        axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/api/home/suggestion`,
 			JSON.stringify({
 				uid: window.sessionStorage.getItem("uid"),
 				suggestionType: "NEWBOOK"

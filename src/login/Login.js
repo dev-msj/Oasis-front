@@ -31,7 +31,7 @@ const Login = () => {
         }
 
         const res = await axios.post(
-            `http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/api/auth/login-default`,
+            `http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/api/auth/login/default`,
             JSON.stringify({
                 uid: id,
                 password: password

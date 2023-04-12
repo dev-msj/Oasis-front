@@ -4,7 +4,7 @@ import axios from 'axios';
 const GoogleLoginButton = () => {
     const onClick = async () => {        
         const res = await axios.post(
-            `http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/api/auth/login-google`,
+            `http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/api/auth/login/google`,
         );
 
         if (res) {
