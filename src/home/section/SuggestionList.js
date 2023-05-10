@@ -4,7 +4,7 @@ import { Descriptions, Image, Space } from 'antd';
 const SuggestionList = props => {
     const RecordList = props.data.map(d => {
         return (
-            <div style={{ marginBottom: "2%", border: "3px solid #FAED7D", borderRadius: "1em" }}>
+            <div style={{ marginBottom: "2%", border: "3px solid #FAED7D", borderRadius: "1em" }} key={crypto.randomUUID()}>
                 <Space size={12}>
                     <Image
                         width={120}
