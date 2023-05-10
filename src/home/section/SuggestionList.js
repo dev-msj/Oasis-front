@@ -10,7 +10,7 @@ const SuggestionList = props => {
                         width={120}
                         height={160}
                         src={d.imageUrl}
-                        style={{ borderRadius: "1em" }}
+                        style={{ borderRadius: "1em", zIndex: "-10" }}
                     />
                     <Descriptions title={d.title} style={{ background: "white", borderRadius: "1em" }}>
                         <Descriptions.Item label="저자">{d.author}</Descriptions.Item>
