@@ -13,7 +13,7 @@ const Login = () => {
     
     useEffect(() => {
         if (window.sessionStorage.getItem('uid') !== null) {
-            navigate('/good-word');
+            navigate('/home');
         }
     });
 
