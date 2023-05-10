@@ -7,15 +7,10 @@ const SuggestionList = props => {
             <div style={{ marginBottom: "2%", border: "3px solid #FAED7D", borderRadius: "1em" }}>
                 <Space size={12}>
                     <Image
-                        width={200}
+                        width={120}
+                        height={160}
                         src={d.imageUrl}
-                        placeholder={
-                        <Image
-                            preview={false}
-                            src={d.imageUrl}
-                            width={200}
-                        />
-                        }
+                        style={{ borderRadius: "1em" }}
                     />
                     <Descriptions title={d.title} style={{ background: "white", borderRadius: "1em" }}>
                         <Descriptions.Item label="저자">{d.author}</Descriptions.Item>
