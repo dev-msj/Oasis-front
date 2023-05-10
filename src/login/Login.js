@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Typography } from 'antd';
 import Icon from '@ant-design/icons';
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import GoogleLoginButton from './GoogleLoginButton';
 
 const { Title } = Typography;
@@ -10,9 +10,10 @@ const { Title } = Typography;
 const Login = () => {
     const [Data, setData] = useState('login');
     const navigate = useNavigate();
+    const location = useLocation();
     
     useEffect(() => {
-        if (window.sessionStorage.getItem('uid') !== null) {
+        if (window.sessionStorage.getItem('uid') !== null && location.pathname === '/') {
             navigate('/home');
         }
     });
