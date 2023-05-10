@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Logout from "../login/Logout"
 import SuggestionList from "./section/SuggestionList";
 import { Radio } from "antd";
 
@@ -39,14 +38,19 @@ const Home = () => {
 	}
 
     return (
-		<div style={{ width: "80%", height: "90vh", textAlign: "center" }}>
-			<Logout />
+		<div style={{ width: "80%", height: "80vh", textAlign: "center" }}>
 			<Radio.Group defaultValue="RECOMMEND" onChange={onChange} buttonStyle="solid">
 				<Radio.Button value="RECOMMEND">추천</Radio.Button>
 				<Radio.Button value="NEWBOOK">신간</Radio.Button>
 				<Radio.Button value="BESTSELLER">베스트셀러</Radio.Button>
 			</Radio.Group>
-			<SuggestionList data={Data} />
+
+			<br />
+			<br />
+
+			<div style={{ height: "100%", overflow: "scroll" }}>
+				<SuggestionList data={Data} />
+			</div>
 		</div>
 	);
 }
