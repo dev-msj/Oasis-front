@@ -20,7 +20,6 @@ const Home = () => {
 			}
 		)
 		.then((res) => {
-			console.log(res)
 			if (res) {
 				setData(res.data);
 			} else {
