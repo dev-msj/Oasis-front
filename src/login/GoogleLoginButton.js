@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import { GoogleOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 
 const GoogleLoginButton = () => {
     const onClick = async () => {        
@@ -16,11 +18,9 @@ const GoogleLoginButton = () => {
     };
     
     return (
-        <>
-            <img src="https://pngimage.net/wp-content/uploads/2018/06/google-login-button-png-1.png"
-                alt="google" width="357px" height="117px" onClick={onClick} 
-            />
-        </>
+        <div style={{ textAlign: 'center' }}>
+            <Button onClick={onClick} icon={<GoogleOutlined />}>구글 로그인</Button>
+        </div>
     );
 }
 
