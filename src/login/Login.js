@@ -45,7 +45,6 @@ const Login = () => {
         );
         
         if (res) {
-            console.log(res)
             if (res.data === true) {
                 if (Data === 'login') {
                     window.sessionStorage.setItem('uid', id);
