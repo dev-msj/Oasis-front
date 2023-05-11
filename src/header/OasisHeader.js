@@ -16,7 +16,7 @@ const OasisHeader = () => {
 	});
 
 	const onClickWrite = () => {
-		console.log('write')
+		navigate('/write')
 	}
 
 	const onClickAlarm = () => {
