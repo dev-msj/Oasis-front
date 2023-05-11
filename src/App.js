@@ -6,6 +6,7 @@ import { Layout } from 'antd';
 import { Content, Footer, Header } from 'antd/es/layout/layout';
 import ContentSelector from './footer/ContentSelector';
 import OasisHeader from './header/OasisHeader';
+import WriteFeed from './feed/WriteFeed';
 
 const App = () => {  
   return (
@@ -19,6 +20,7 @@ const App = () => {
           <Routes>
             <Route path='/' element={<Login />} />
             <Route path='/home' element={<Home />} />
+            <Route path='/write' element={<WriteFeed />} />
           </Routes>
         </Content>
 
