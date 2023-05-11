@@ -6,31 +6,41 @@ import ReportEditor from './section/edit/ReportEditor';
 const WriteFeed = () => {
     const [BookId, setBookId] = useState(null);
 
-    console.log(BookId)
-
-    const wrapperSetParentState = useCallback(bookId => {
+    const wrapperSetBookIdState = useCallback(bookId => {
         setBookId(bookId);
     }, [setBookId]);
 
-    const onClick = async () => {
-        const keyword = document.getElementById('keyword').value;
-        const res = await axios.get(
-            `http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/api/books/${keyword}`,
-            {
-                withCredentials: true
-            }
-        );
-    }
+    const wrapperSetReportState = useCallback(report => {
+        const onClick = async (report) => {
+            const res = await axios.post(
+                `http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/api/users/feed`,
+                JSON.stringify({
+                    bookId: BookId,
+                    report: report
+                }),
+                {
+                    headers: {
+                        "Content-Type" : "application/json"
+                    }, 
+                    withCredentials: true
+                }
+            );
+    
+            console.log(res)
+        }
+
+        onClick(report);
+    }, [BookId]);
 
     return (
         <>
             {
                 BookId === null ? 
                 <div style={{ width: "80%", height: "80vh", textAlign: "center" }}>
-                    <BookSearch callback={wrapperSetParentState} />
+                    <BookSearch callback={wrapperSetBookIdState} />
                 </div> : 
                 <div style={{ width: "80%", height: "80vh" }}>
-                    <ReportEditor />
+                    <ReportEditor callback={wrapperSetReportState} />
                 </div>
             }
         </>
