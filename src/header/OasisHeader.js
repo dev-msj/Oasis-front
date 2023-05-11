@@ -21,6 +21,7 @@ const OasisHeader = () => {
 
 	const onClickAlarm = () => {
 		console.log('alarm')
+		setShow('alarm')
 	}
 
     return (
