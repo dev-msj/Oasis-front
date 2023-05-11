@@ -2,9 +2,11 @@ import React, { useCallback, useState } from 'react';
 import axios from 'axios';
 import BookSearch from './section/search/BookSearch';
 import ReportEditor from './section/edit/ReportEditor';
+import { useNavigate } from 'react-router-dom';
 
 const WriteFeed = () => {
     const [BookId, setBookId] = useState(null);
+    const navigate = useNavigate();
 
     const wrapperSetBookIdState = useCallback(bookId => {
         setBookId(bookId);
@@ -26,11 +28,12 @@ const WriteFeed = () => {
                 }
             );
     
-            console.log(res)
+            console.log(res);
+            navigate('/home');
         }
 
         onClick(report);
-    }, [BookId]);
+    }, [BookId, navigate]);
 
     return (
         <>
