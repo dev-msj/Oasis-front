@@ -27,9 +27,12 @@ const WriteFeed = () => {
                     withCredentials: true
                 }
             );
-    
-            console.log(res);
-            navigate('/home');
+
+            if (res.data.code === 500) {
+                alert(res.data.message);
+            } else {
+                navigate('/home');
+            }
         }
 
         onClick(report);
