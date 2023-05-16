@@ -9,9 +9,8 @@ const GoogleLoginButton = () => {
             `http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/api/auth/login/google`,
         );
 
-        if (res) {
-            console.log(res)
-            window.open(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}${res.data}`, '구글 로그인');
+        if (res.data) {
+            window.location.href = `http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}${res.data}`;
         } else {
             alert('Internal Server Error!');
         }
