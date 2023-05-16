@@ -10,7 +10,7 @@ const OasisHeader = () => {
 	const location = useLocation();
 
 	useEffect(() => {
-		if (window.sessionStorage.getItem('uid') === null && location.pathname !== '/') {
+		if (window.sessionStorage.getItem('uid') === null && location.pathname !== '/' && location.pathname !== '/join') {
 			navigate('/');
 		}
 	});
@@ -30,7 +30,10 @@ const OasisHeader = () => {
 			<Col span={8}>
 				<font color="#FFFFFF" style={{ fontFamily: "궁서", fontSize: "xxx-large" }}>Oasis</font>
 			</Col>
-			<Col span={8} style={{ textAlign:"center" }}><Logout /></Col>
+			{
+				location.pathname === '/join' ? <Col span={8}></Col> : 
+				<Col span={8} style={{ textAlign:"center" }}><Logout /></Col>
+			}
 			<Col span={8} style={{ textAlign: 'right' }}>
 				<Row>
 					<Col span={16} style={{ paddingRight: '5%' }}>
