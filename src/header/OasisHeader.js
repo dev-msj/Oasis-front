@@ -10,10 +10,14 @@ const OasisHeader = () => {
 	const location = useLocation();
 
 	useEffect(() => {
-		if (window.sessionStorage.getItem('uid') === null && location.pathname !== '/' && location.pathname !== '/join') {
-			navigate('/');
+		if (window.sessionStorage.getItem('uid') === null && location.pathname !== '/' && location.pathname !== '/oauth2/redirect') {
+			if (window.sessionStorage.getItem('joinState') === 'false') {
+				navigate('/join');
+			} else {
+				navigate('/');
+			}
 		}
-	});
+	}, [location.pathname, navigate]);
 
 	const onClickWrite = () => {
 		navigate('/write')

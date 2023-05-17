@@ -14,7 +14,11 @@ const Login = () => {
     
     useEffect(() => {
         if (window.sessionStorage.getItem('uid') !== null && location.pathname === '/') {
-            navigate('/home');
+            if (window.sessionStorage.getItem('joinState') === 'false') {
+				navigate('/join');
+			} else {
+                navigate('/home');
+            }
         }
     });
 
