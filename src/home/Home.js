@@ -5,35 +5,33 @@ import { Radio } from "antd";
 
 const Home = () => {
 	const [Data, setData] = useState([]);
-	const [Type, setType] = useState("RECOMMEND");
 
 	useEffect(() => {
-        axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/api/home/suggestion`,
+		initData("RECOMMEND");
+	}, []);
+
+	const initData = async (suggestion_type) => {
+		const res = await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/api/home/suggestion`,
 			JSON.stringify({
 				uid: window.sessionStorage.getItem("uid"),
-				suggestionType: Type
+				suggestionType: suggestion_type
 			}), {
 				headers: {
 					"Content-Type" : "application/json"
 				}, 
 				withCredentials: true
 			}
-		)
-		.then((res) => {
-			if (res) {
-				setData(res.data);
-			} else {
-				alert('Internal Server Error!');
-			}
-		})
-		.catch(err => {
-			console.log(err)
-			console.log(err.response)
-		});
-    }, [Type]);
+		);
+		
+		if (res) {
+			setData(res.data);
+		} else {
+			alert('Internal Server Error!');
+		}
+	}
 
 	const onChange = value => {
-		setType(value.target.value);
+		initData(value.target.value);
 	}
 
     return (
