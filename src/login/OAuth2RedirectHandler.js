@@ -6,11 +6,21 @@ const OAuth2RedirectHandler = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const uid = new URL(window.location.href).searchParams.get("uid");
+        const url = new URL(window.location.href);
+        if (url.searchParams.get('result') === 'success') {
+            window.sessionStorage.setItem('uid', url.searchParams.get("uid"));
+            window.sessionStorage.setItem('joinState', url.searchParams.get('joinState'));
 
-        window.sessionStorage.setItem('uid', uid);
-
-        navigate('/home');
+            if (window.sessionStorage.getItem('joinState') === 'false') {
+                navigate('/join');
+            } else {
+                navigate('/home');
+            }
+        } else {
+            alert(url.searchParams.get('message'));
+            navigate('/');
+        }
+        
     });
 
     return <></>;
