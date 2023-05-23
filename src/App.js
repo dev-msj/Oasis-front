@@ -7,7 +7,6 @@ import { Content, Footer, Header } from 'antd/es/layout/layout';
 import ContentSelector from './footer/ContentSelector';
 import OasisHeader from './header/OasisHeader';
 import WriteFeed from './feed/WriteFeed';
-import OAuth2RedirectHandler from './login/OAuth2RedirectHandler';
 import Join from './join/Join';
 
 const App = () => {  
@@ -23,7 +22,6 @@ const App = () => {
             <Route path='/' element={<Login />} />
             <Route path='/home' element={<Home />} />
             <Route path='/write' element={<WriteFeed />} />
-            <Route path='/oauth2/redirect' element={<OAuth2RedirectHandler />} />
             <Route path='/join' element={<Join />} />
           </Routes>
         </Content>
