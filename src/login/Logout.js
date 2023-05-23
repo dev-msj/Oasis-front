@@ -4,8 +4,7 @@ import { Button } from "antd";
 const Logout = () => {
 	const handleLogout = () => {
 		window.sessionStorage.removeItem('uid');
-		window.sessionStorage.removeItem('word');
-		window.sessionStorage.removeItem('human');
+		window.sessionStorage.removeItem('joinState');
 		window.location.reload();
 	}
 
