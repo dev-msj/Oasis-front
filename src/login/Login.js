@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Form, Input, Button, Typography } from 'antd';
 import Icon from '@ant-design/icons';
 import axios from "axios";
@@ -8,10 +8,9 @@ import GoogleLoginButton from './GoogleLoginButton';
 const { Title } = Typography;
 
 const Login = () => {
-    const [Data, setData] = useState('login');
     const navigate = useNavigate();
     const location = useLocation();
-    
+
     useEffect(() => {
         if (window.sessionStorage.getItem('uid') !== null && location.pathname === '/') {
             if (window.sessionStorage.getItem('joinState') === 'false') {
@@ -23,9 +22,11 @@ const Login = () => {
     });
 
     const handleOnClick = () => {
-        setData('join');
+        window.sessionStorage.setItem('joinState', 'false');
+        window.sessionStorage.setItem('social', 'N');
+        navigate('/join');
     }
-    
+
     const handleSubmit = async () => {
         const id = document.getElementById('id').value;
         const password = document.getElementById('password').value;
@@ -48,17 +49,13 @@ const Login = () => {
                 withCredentials: true
             }
         );
-        
+
         if (res) {
             if (res.data === true) {
-                if (Data === 'login') {
-                    window.sessionStorage.setItem('uid', id);
-                    navigate('/home');
-                } else {
-                    setData('login');
-                }
+                window.sessionStorage.setItem('uid', id);
+                navigate('/home');
             } else {
-                alert(Data === 'login' ? 'id나 password를 확인해 주세요!' : '잘못된 요청입니다!');
+                alert('id나 password를 확인해 주세요!');
             }
         } else {
             alert('Internal Server Error!');
@@ -92,17 +89,13 @@ const Login = () => {
 
                 <div style={{ marginBottom: '5%' }}>
                     <Button type="primary" htmlType="submit" className="login-form-button" onClick={handleSubmit} style={{ minWidth: '100%' }}>
-                        {Data.toUpperCase()}
+                        로그인
                     </Button>
                 </div>
 
-                {
-                    Data === 'login' ? (
-                        <Form.Item style={{ textAlign: "center" }}>
-                            <Button ghost onClick={handleOnClick}>회원가입</Button>
-                        </Form.Item>
-                    ) : (<></>)
-                }
+                <Form.Item style={{ textAlign: "center" }}>
+                    <Button ghost onClick={handleOnClick}>회원가입</Button>
+                </Form.Item>
             </div>
             <GoogleLoginButton />
         </div>
