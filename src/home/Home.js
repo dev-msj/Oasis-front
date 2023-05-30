@@ -7,7 +7,9 @@ const Home = () => {
 	const [Data, setData] = useState([]);
 
 	useEffect(() => {
-		initData("RECOMMEND");
+		if (window.sessionStorage.getItem('joinState') === 'true') {
+			initData("RECOMMEND");
+		}
 	}, []);
 
 	const initData = async (suggestion_type) => {
