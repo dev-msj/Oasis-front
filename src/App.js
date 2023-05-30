@@ -8,6 +8,7 @@ import ContentSelector from './footer/ContentSelector';
 import OasisHeader from './header/OasisHeader';
 import WriteFeed from './feed/WriteFeed';
 import Join from './join/Join';
+import NotFound from './notFound/NotFound';
 
 const App = () => {  
   return (
@@ -23,6 +24,7 @@ const App = () => {
             <Route path='/home' element={<Home />} />
             <Route path='/write' element={<WriteFeed />} />
             <Route path='/join' element={<Join />} />
+            <Route path='/*' element={<NotFound />} />
           </Routes>
         </Content>
 
