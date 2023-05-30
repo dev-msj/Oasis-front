@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import jwt from 'jwt-decode';
 
 const GoogleLoginButton = () => {
     const navigate = useNavigate();
@@ -26,8 +27,9 @@ const GoogleLoginButton = () => {
             );
 
             if (res) {
-                window.sessionStorage.setItem('uid', res.data.uid);
-                window.sessionStorage.setItem('joinState', res.data.joinState);
+                window.sessionStorage.setItem('uid', jwt(data.credential).email);
+                window.sessionStorage.setItem('joinState', res.data);
+                window.sessionStorage.setItem('social', 'Y');
                 if (res.data.joinState === true) {
                     navigate('/home');
                 } else {
