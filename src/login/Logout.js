@@ -5,6 +5,7 @@ const Logout = () => {
 	const handleLogout = () => {
 		window.sessionStorage.removeItem('uid');
 		window.sessionStorage.removeItem('joinState');
+		window.sessionStorage.removeItem('social');
 		window.location.reload();
 	}
 
