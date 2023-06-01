@@ -53,6 +53,8 @@ const Login = () => {
         if (res) {
             if (res.data === true) {
                 window.sessionStorage.setItem('uid', id);
+                window.sessionStorage.setItem('joinState', 'true');
+                window.sessionStorage.setItem('social', 'N');
                 navigate('/home');
             } else {
                 alert('id나 password를 확인해 주세요!');
