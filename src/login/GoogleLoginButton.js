@@ -2,8 +2,10 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import jwt from 'jwt-decode';
+import { useCookies } from 'react-cookie';
 
 const GoogleLoginButton = () => {
+    const [, setCookie] = useCookies(['AccessToken', 'RefreshToken']);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -28,16 +30,34 @@ const GoogleLoginButton = () => {
 
             if (res) {
                 window.sessionStorage.setItem('uid', jwt(data.credential).email);
-                window.sessionStorage.setItem('joinState', res.data);
+                window.sessionStorage.setItem('joinUser', res.data.joinUser);
                 window.sessionStorage.setItem('social', 'Y');
-                if (res.data.joinState === true) {
+
+                setTokenToCookie('AccessToken', res.data.jsonWebToken.accessToken);
+                setTokenToCookie('RefreshToken', res.data.jsonWebToken.refreshToken);
+
+                if (res.data.joinUser === true) {
                     navigate('/home');
                 } else {
                     navigate('/join');
                 }
             }
         }
-    }, [navigate]);
+
+        const setTokenToCookie = (name, token) => {
+            setCookie(
+                name,
+                token,
+                {
+                    path: '/',
+                    // domain: process.env.REACT_APP_HOST,
+                    maxAge: 1000 * 60 * 60 * 24 * 14,
+                    // httpOnly: true,
+                    sameSite: "lax"
+                }
+            )
+        }
+    }, [navigate, setCookie]);
 
     return (
         <div style={{ textAlign: 'center' }}>

@@ -4,25 +4,27 @@ import Icon from '@ant-design/icons';
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import GoogleLoginButton from './GoogleLoginButton';
+import { useCookies } from "react-cookie";
 
 const { Title } = Typography;
 
 const Login = () => {
+    const [, setCookie] = useCookies(['AccessToken', 'RefreshToken']);
     const navigate = useNavigate();
     const location = useLocation();
 
     useEffect(() => {
         if (window.sessionStorage.getItem('uid') !== null && location.pathname === '/') {
-            if (window.sessionStorage.getItem('joinState') === 'false') {
+            if (window.sessionStorage.getItem('joinUser') === 'false') {
 				navigate('/join');
 			} else {
                 navigate('/home');
             }
         }
-    });
+    }, [location.pathname, navigate]);
 
     const handleOnClick = () => {
-        window.sessionStorage.setItem('joinState', 'false');
+        window.sessionStorage.setItem('joinUser', 'false');
         window.sessionStorage.setItem('social', 'N');
         navigate('/join');
     }
@@ -51,17 +53,38 @@ const Login = () => {
         );
 
         if (res) {
-            if (res.data === true) {
-                window.sessionStorage.setItem('uid', id);
-                window.sessionStorage.setItem('joinState', 'true');
-                window.sessionStorage.setItem('social', 'N');
-                navigate('/home');
-            } else {
-                alert('id나 password를 확인해 주세요!');
+            console.log(res)
+            if (res.data.code === 401) {
+                alert(res.data.message);
+
+                return;
             }
+
+            window.sessionStorage.setItem('uid', id);
+            window.sessionStorage.setItem('joinUser', res.data.joinUser);
+            window.sessionStorage.setItem('social', 'N');
+
+            setTokenToCookie('AccessToken', res.data.jsonWebToken.accessToken);
+            setTokenToCookie('RefreshToken', res.data.jsonWebToken.refreshToken);
+
+            navigate('/home');
         } else {
             alert('Internal Server Error!');
         }
+    }
+
+    const setTokenToCookie = (name, token) => {
+        setCookie(
+            name,
+            token,
+            {
+                path: '/',
+                // domain: process.env.REACT_APP_HOST,
+                maxAge: 1000 * 60 * 60 * 24 * 14,
+                // httpOnly: true,
+                sameSite: "lax"
+            }
+        )
     }
 
     return (
