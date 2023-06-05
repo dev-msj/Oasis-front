@@ -2,18 +2,14 @@ import { Button, Col, Input, Row } from 'antd';
 import React, { useState } from 'react';
 import SearchList from './SearchList';
 import axios from 'axios';
+import CustomAxios from '../../../interceptor/CustomAxios';
 
 const BookSearch = props => {
     const [Data, setData] = useState([]);
 
     const onClick = async () => {
         const keyword = document.getElementById('keyword').value;
-        const res = await axios.get(
-            `http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/api/books/${keyword}`,
-            {
-                withCredentials: true
-            }
-        );
+        const res = await CustomAxios.get(`/api/books/${keyword}`);
 
         if (res) {
             setData(res.data);

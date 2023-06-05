@@ -1,34 +1,33 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import SuggestionList from "./section/SuggestionList";
 import { Radio } from "antd";
+import CustomAxios from "../interceptor/CustomAxios";
 
 const Home = () => {
 	const [Data, setData] = useState([]);
 
 	useEffect(() => {
-		if (window.sessionStorage.getItem('joinState') === 'true') {
+		if (window.sessionStorage.getItem('joinUser') === 'true') {
 			initData("RECOMMEND");
 		}
 	}, []);
 
 	const initData = async (suggestion_type) => {
-		const res = await axios.post(`http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/api/home/suggestion`,
-			JSON.stringify({
-				uid: window.sessionStorage.getItem("uid"),
-				suggestionType: suggestion_type
-			}), {
-				headers: {
-					"Content-Type" : "application/json"
-				}, 
-				withCredentials: true
-			}
-		);
-		
-		if (res) {
+		try {
+			const res = await CustomAxios.post('/api/home/suggestion',
+				JSON.stringify({
+					uid: window.sessionStorage.getItem("uid"),
+					suggestionType: suggestion_type
+				})
+			);
+
 			setData(res.data);
-		} else {
-			alert('Internal Server Error!');
+		} catch(err) {
+			if (err.response.status === 403) {
+				alert("접근 권한이 없습니다!");
+			} else {
+				alert("Internal Server Error!");
+			}
 		}
 	}
 

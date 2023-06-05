@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
-import axios from 'axios';
 import BookSearch from './section/search/BookSearch';
 import ReportEditor from './section/edit/ReportEditor';
 import { useNavigate } from 'react-router-dom';
+import CustomAxios from '../interceptor/CustomAxios';
 
 const WriteFeed = () => {
     const [BookId, setBookId] = useState(null);
@@ -14,18 +14,12 @@ const WriteFeed = () => {
 
     const wrapperSetReportState = useCallback(report => {
         const onClick = async (report) => {
-            const res = await axios.post(
-                `http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/api/users/feed`,
+            const res = await CustomAxios.post(
+                '/api/users/feed',
                 JSON.stringify({
                     bookId: BookId,
                     report: report
-                }),
-                {
-                    headers: {
-                        "Content-Type" : "application/json"
-                    }, 
-                    withCredentials: true
-                }
+                })
             );
 
             if (res.data.code === 500) {

@@ -6,13 +6,14 @@ import { BulbOutlined, PlusSquareOutlined } from '@ant-design/icons';
 
 const OasisHeader = () => {
 	const [show, setShow] = useState(true);
+
     const navigate = useNavigate();
 	const location = useLocation();
 
 	useEffect(() => {
 		if (window.sessionStorage.getItem('uid') === null && location.pathname !== '/') {
 				navigate('/');
-		} else if (window.sessionStorage.getItem('joinState') === 'false' && location.pathname !== '/join') {
+		} else if (window.sessionStorage.getItem('joinUser') === 'false' && location.pathname !== '/join') {
 			navigate('/join');
 		}
 	}, [location.pathname, navigate]);
