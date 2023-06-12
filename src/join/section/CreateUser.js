@@ -55,7 +55,7 @@ const CreateUser = props => {
             }
         );
 
-        if (res) {
+        try {
             if (res.data.code === 500) {
                 alert(res.data.message);
 
@@ -70,8 +70,9 @@ const CreateUser = props => {
             setTokenToCookie('RefreshToken', res.data.jsonWebToken.refreshToken);
 
             props.setJoin(true);
-        } else {
+        } catch(err) {
             alert('Internal Server Error!');
+            console.log(err);
         }
     }
 
