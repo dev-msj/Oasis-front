@@ -11,8 +11,10 @@ const OasisHeader = () => {
 	const location = useLocation();
 
 	useEffect(() => {
-		if (window.sessionStorage.getItem('uid') === null && location.pathname !== '/') {
-			if (location.pathname === '/join' && window.sessionStorage.getItem('joinUser') !== null && window.sessionStorage.getItem('joinUser') === 'false') {
+		const userSession = JSON.parse(window.sessionStorage.getItem('userSession'));
+
+		if (userSession === null && location.pathname !== '/') {
+			if (location.pathname === '/join' && userSession.joinUser !== null && (!userSession.joinUser || !userSession.createProfile)) {
 				navigate('/join');
 			} else {
 				navigate('/');

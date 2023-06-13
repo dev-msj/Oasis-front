@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import jwt from 'jwt-decode';
 import { useCookies } from 'react-cookie';
+import CustomAxios from '../interceptor/CustomAxios';
 
 const GoogleLoginButton = () => {
     const [, setCookie] = useCookies(['AccessToken', 'RefreshToken']);
@@ -29,18 +30,39 @@ const GoogleLoginButton = () => {
             );
 
             if (res) {
-                window.sessionStorage.setItem('uid', jwt(data.credential).email);
-                window.sessionStorage.setItem('joinUser', res.data.joinUser);
-                window.sessionStorage.setItem('social', 'Y');
-
                 setTokenToCookie('AccessToken', res.data.jsonWebToken.accessToken);
                 setTokenToCookie('RefreshToken', res.data.jsonWebToken.refreshToken);
 
-                if (res.data.joinUser === true) {
+                const userSession = {
+                    'uid': jwt(data.credential).email,
+                    'joinUser': res.data.joinUser,
+                    'createProfile': checkProfile(),
+                    'social': 'Y'
+                }
+    
+                window.sessionStorage.setItem('userSession', JSON.stringify(userSession));
+
+                if (userSession.joinUser === true) {
                     navigate('/home');
                 } else {
                     navigate('/join');
                 }
+            }
+        }
+
+        const checkProfile = async () => {
+            const res = await CustomAxios.get('/api/users/profile');
+    
+            try {
+                if (res.data.code === 404) {
+                    alert(res.data.message);
+                    return false;
+                }
+    
+                return true;
+            } catch(err) {
+                alert('Internal Server Error!');
+                console.log(err);
             }
         }
 

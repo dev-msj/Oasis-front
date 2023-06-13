@@ -6,7 +6,7 @@ import { useCookies } from "react-cookie";
 
 const CreateUser = props => {
     const [, setCookie] = useCookies(['AccessToken', 'RefreshToken']);
-    const social = window.sessionStorage.getItem('social');
+    const userSession = JSON.parse(window.sessionStorage.getItem('userSession'));
 
     const checkEmail = (email) => {
         const regex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
@@ -23,7 +23,7 @@ const CreateUser = props => {
             return;
         }
 
-        if (social === 'N') {
+        if (userSession.social === 'N') {
             const passwordAgain = document.getElementById('passwordAgain').value;
 
             console.log(passwordElement.value)
@@ -44,8 +44,8 @@ const CreateUser = props => {
             `http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/api/auth/join`,
             JSON.stringify({
                 uid: id,
-                password: social === 'N' ? passwordElement.value : null,
-                socialYN: social
+                password: userSession.social === 'N' ? passwordElement.value : null,
+                socialYN: userSession.social
             }),
             {
                 headers: {
@@ -62,9 +62,14 @@ const CreateUser = props => {
                 return;
             }
 
-            window.sessionStorage.setItem('uid', id);
-            window.sessionStorage.setItem('joinUser', res.data.joinUser);
-            window.sessionStorage.setItem('social', 'N');
+            const userSession = {
+                'uid': id,
+                'joinUser': res.data.joinUser,
+                'createProfile': false,
+                'social': 'N'
+            }
+
+            window.sessionStorage.setItem('userSession', JSON.stringify(userSession));
 
             setTokenToCookie('AccessToken', res.data.jsonWebToken.accessToken);
             setTokenToCookie('RefreshToken', res.data.jsonWebToken.refreshToken);
@@ -93,7 +98,7 @@ const CreateUser = props => {
     return (
         <>
             {
-                social === 'N' ?
+                userSession.social === 'N' ?
                 <>
                     <div style={{ marginBottom: '5%' }}>
                         <Input
