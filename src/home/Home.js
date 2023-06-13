@@ -7,7 +7,8 @@ const Home = () => {
 	const [Data, setData] = useState([]);
 
 	useEffect(() => {
-		if (window.sessionStorage.getItem('joinUser') === 'true') {
+		const userSession = JSON.parse(window.sessionStorage.getItem('userSession'));
+		if (userSession !== null && userSession.joinUser) {
 			initData("RECOMMEND");
 		}
 	}, []);

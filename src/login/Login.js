@@ -5,6 +5,7 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import GoogleLoginButton from './GoogleLoginButton';
 import { useCookies } from "react-cookie";
+import CustomAxios from "../interceptor/CustomAxios";
 
 const { Title } = Typography;
 
@@ -14,8 +15,9 @@ const Login = () => {
     const location = useLocation();
 
     useEffect(() => {
-        if (window.sessionStorage.getItem('uid') !== null && location.pathname === '/') {
-            if (window.sessionStorage.getItem('joinUser') === 'false') {
+        const userSession = JSON.parse(window.sessionStorage.getItem('userSession'));
+        if (userSession !== null && location.pathname === '/') {
+            if (!userSession.joinUser) {
 				navigate('/join');
 			} else {
                 navigate('/home');
@@ -24,8 +26,15 @@ const Login = () => {
     }, [location.pathname, navigate]);
 
     const handleOnClick = () => {
-        window.sessionStorage.setItem('joinUser', 'false');
-        window.sessionStorage.setItem('social', 'N');
+        const userSession = {
+            'uid': null,
+            'joinUser': false,
+            'createProfile': false,
+            'social': 'N'
+        }
+
+        window.sessionStorage.setItem('userSession', JSON.stringify(userSession));
+
         navigate('/join');
     }
 
@@ -52,24 +61,45 @@ const Login = () => {
             }
         );
 
-        if (res) {
-            console.log(res)
+        try {
             if (res.data.code === 401) {
                 alert(res.data.message);
 
                 return;
             }
 
-            window.sessionStorage.setItem('uid', id);
-            window.sessionStorage.setItem('joinUser', res.data.joinUser);
-            window.sessionStorage.setItem('social', 'N');
-
             setTokenToCookie('AccessToken', res.data.jsonWebToken.accessToken);
             setTokenToCookie('RefreshToken', res.data.jsonWebToken.refreshToken);
 
+            const userSession = {
+                'uid': id,
+                'joinUser': res.data.joinUser,
+                'createProfile': checkProfile(),
+                'social': 'N'
+            }
+
+            window.sessionStorage.setItem('userSession', JSON.stringify(userSession));
+            
             navigate('/home');
-        } else {
+        } catch(err) {
             alert('Internal Server Error!');
+            console.log(err);
+        }
+    }
+
+    const checkProfile = async () => {
+        const res = await CustomAxios.get('/api/users/profile');
+
+        try {
+            if (res.data.code === 404) {
+                alert(res.data.message);
+                return false;
+            }
+
+            return true;
+        } catch(err) {
+            alert('Internal Server Error!');
+            console.log(err);
         }
     }
 

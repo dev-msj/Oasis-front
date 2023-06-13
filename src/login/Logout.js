@@ -6,9 +6,7 @@ const Logout = () => {
 	const [, , removeCookie] = useCookies(['AccessToken', 'RefreshToken']);
 
 	const handleLogout = () => {
-		window.sessionStorage.removeItem('uid');
-		window.sessionStorage.removeItem('joinUser');
-		window.sessionStorage.removeItem('social');
+		window.sessionStorage.removeItem('userSession');
 
 		removeCookie('AccessToken');
 		removeCookie('RefreshToken');

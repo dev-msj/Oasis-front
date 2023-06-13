@@ -6,7 +6,8 @@ import CreateProfile from "./section/CreateProfile";
 const { Title } = Typography;
 
 const Join = () => {
-    const [join, setJoin] = useState(false);
+    const userSession = JSON.parse(window.sessionStorage.getItem('userSession'));
+    const [join, setJoin] = useState(userSession.joinUser);
 
     return (
         <div>

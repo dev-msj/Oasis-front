@@ -95,7 +95,7 @@ const CreateProfile = () => {
         <div style={{ marginBottom: '5%', textAlign: 'center' }}>
             <Avatar
                 size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-                icon={<Gravatar email={window.sessionStorage.getItem('uid')} default="retro" />}
+                icon={<Gravatar email={JSON.parse(window.sessionStorage.getItem('userSession')).uid} default="retro" />}
             />
         </div>
 
