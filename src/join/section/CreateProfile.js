@@ -80,6 +80,11 @@ const CreateProfile = () => {
             );
 
             if (res.data === true) {
+                const userSession = JSON.parse(window.sessionStorage.getItem('userSession'));
+                userSession.createProfile = true;
+
+                window.sessionStorage.setItem('userSession', JSON.stringify(userSession));
+
                 navigate('/home');
             } else {
                 alert('프로필 생성에 실패했습니다.');
