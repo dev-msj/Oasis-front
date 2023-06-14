@@ -14,11 +14,9 @@ const OasisHeader = () => {
 		const userSession = JSON.parse(window.sessionStorage.getItem('userSession'));
 
 		if (userSession === null && location.pathname !== '/') {
-			if (location.pathname === '/join' && userSession.joinUser !== null && (!userSession.joinUser || !userSession.createProfile)) {
-				navigate('/join');
-			} else {
-				navigate('/');
-			}
+			navigate('/');
+		} else if (userSession !== null && (!userSession.joinUser || !userSession.createProfile)) {
+			navigate('/join');
 		}
 	}, [location.pathname, navigate]);
 
