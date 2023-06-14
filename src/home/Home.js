@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import SuggestionList from "./section/SuggestionList";
 import { Radio } from "antd";
 import CustomAxios from "../interceptor/CustomAxios";
@@ -6,18 +6,11 @@ import CustomAxios from "../interceptor/CustomAxios";
 const Home = () => {
 	const [Data, setData] = useState([]);
 
-	useEffect(() => {
-		const userSession = JSON.parse(window.sessionStorage.getItem('userSession'));
-		if (userSession !== null && userSession.joinUser) {
-			initData("RECOMMEND");
-		}
-	}, []);
-
-	const initData = async (suggestion_type) => {
+	const initData = useCallback(async (suggestion_type) => {
 		try {
 			const res = await CustomAxios.post('/api/home/suggestion',
 				JSON.stringify({
-					uid: window.sessionStorage.getItem("uid"),
+					uid: null,
 					suggestionType: suggestion_type
 				})
 			);
@@ -30,7 +23,14 @@ const Home = () => {
 				alert("Internal Server Error!");
 			}
 		}
-	}
+	}, []);
+
+	useEffect(() => {
+		const userSession = JSON.parse(window.sessionStorage.getItem('userSession'));
+		if (userSession !== null && userSession.joinUser) {
+			initData("RECOMMEND");
+		}
+	}, [initData]);
 
 	const onChange = value => {
 		initData(value.target.value);
