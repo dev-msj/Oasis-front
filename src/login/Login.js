@@ -74,7 +74,7 @@ const Login = () => {
             const userSession = {
                 'uid': id,
                 'joinUser': res.data.joinUser,
-                'createProfile': checkProfile(),
+                'createProfile': await checkProfile(),
                 'social': 'N'
             }
 
