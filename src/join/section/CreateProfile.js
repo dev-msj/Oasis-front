@@ -81,21 +81,16 @@ const CreateProfile = () => {
             );
 
             if (res.data.code !== 200) {
-                alert(res.data.data);
-                return;
-            }
-
-            if (res.data.data) {
-                const userSession = JSON.parse(window.sessionStorage.getItem('userSession'));
-                userSession.createProfile = true;
-
-                window.sessionStorage.setItem('userSession', JSON.stringify(userSession));
-
-                navigate('/home');
-            } else {
                 alert('프로필 생성에 실패했습니다.');
                 return;
             }
+
+            const userSession = JSON.parse(window.sessionStorage.getItem('userSession'));
+            userSession.createProfile = true;
+
+            window.sessionStorage.setItem('userSession', JSON.stringify(userSession));
+
+            navigate('/home');
         } catch(err) {
             alert('Internal Server Error!');
             console.log(err);
