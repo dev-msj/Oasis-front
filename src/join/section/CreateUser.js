@@ -26,9 +26,6 @@ const CreateUser = props => {
         if (userSession.social === 'N') {
             const passwordAgain = document.getElementById('passwordAgain').value;
 
-            console.log(passwordElement.value)
-            console.log(passwordAgain)
-
             if (passwordElement.value !== passwordAgain) {
                 alert('password가 일치하지 않습니다!');
                 return;
