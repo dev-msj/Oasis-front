@@ -30,7 +30,7 @@ const OasisHeader = () => {
 	}
 
     return (
-		location.pathname === '/' ? <></> :
+		(location.pathname === '/' || location.pathname === '/join') ? <></> :
 		<Row>
 			<Col span={8}>
 				<font color="#FFFFFF" style={{ fontFamily: "궁서", fontSize: "xxx-large" }}>Oasis</font>
