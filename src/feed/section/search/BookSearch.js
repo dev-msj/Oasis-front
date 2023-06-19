@@ -1,7 +1,6 @@
 import { Button, Col, Input, Row } from 'antd';
 import React, { useState } from 'react';
 import SearchList from './SearchList';
-import axios from 'axios';
 import CustomAxios from '../../../interceptor/CustomAxios';
 
 const BookSearch = props => {
