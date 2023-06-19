@@ -40,10 +40,11 @@ const CreateProfile = () => {
             return;
         }
 
-        const res = await CustomAxios.get(`/api/users/profiles/duplicate/${nickname}`);
-
+        
         try {
-            if (res.data === false) {
+            const res = await CustomAxios.get(`/api/users/profiles/duplicate/${nickname}`);
+
+            if (!res.data) {
                 alert('사용 가능한 닉네임입니다!');
                 setDuplicateCheck(true);
             } else {
@@ -79,7 +80,12 @@ const CreateProfile = () => {
                 })
             );
 
-            if (res.data === true) {
+            if (res.data.code !== 200) {
+                alert(res.data.data);
+                return;
+            }
+
+            if (res.data.data) {
                 const userSession = JSON.parse(window.sessionStorage.getItem('userSession'));
                 userSession.createProfile = true;
 
